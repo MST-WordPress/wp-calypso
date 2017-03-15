@@ -73,6 +73,7 @@
 		"rubberband-scroll-disable": true,
 		"settings/security/monitor": true,
 		"signup/domain-first-flow": true,
+		"signup/social": false,
 		"ui/first-view": false,
 		"upgrades/checkout": true,
 		"upgrades/credit-cards": true,
