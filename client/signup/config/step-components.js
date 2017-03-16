@@ -36,4 +36,5 @@ module.exports = {
 	themes: ThemeSelectionComponent,
 	'themes-site-selected': ThemeSelectionComponent,
 	user: UserSignupComponent,
+	'user-social': UserSignupComponent,
 };
