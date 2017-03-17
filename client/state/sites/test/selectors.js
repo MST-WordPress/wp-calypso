@@ -48,6 +48,7 @@ import {
 	isJetpackSiteMainNetworkSite,
 	getSiteAdminUrl,
 	getCustomizerUrl,
+	getJetpackComputedAttributes,
 	siteSupportsJetpackSettingsUi
 } from '../selectors';
 
@@ -2464,6 +2465,51 @@ describe( 'selectors', () => {
 			}, 77203074 );
 
 			expect( supportsJetpackSettingsUI ).to.be.true;
+		} );
+	} );
+
+	describe( 'getJetpackComputedAttributes()', () => {
+		it( 'should return null for attributes if a site is not Jetpack', () => {
+			const state = {
+				sites: {
+					items: {
+						77203074: {
+							ID: 77203074,
+							URL: 'https://example.com',
+							jetpack: false,
+							options: {
+								jetpack_version: '4.6.0'
+							}
+						}
+					}
+				}
+			};
+
+			const noNewAttributes = getJetpackComputedAttributes( state, 77203074 );
+			expect( noNewAttributes.hasMinimumJetpackVersion ).to.equal( undefined );
+			expect( noNewAttributes.canAutoupdateFiles ).to.equal( undefined );
+			expect( noNewAttributes.canUpdateFiles ).to.equal( undefined );
+		} );
+
+		it( 'should return null for attributes if a site is not Jetpack', () => {
+			const state = {
+				sites: {
+					items: {
+						77203074: {
+							ID: 77203074,
+							URL: 'https://example.com',
+							jetpack: true,
+							options: {
+								jetpack_version: '4.6.0'
+							}
+						}
+					}
+				}
+			};
+			const noNewAttributes = getJetpackComputedAttributes( state, 77203074 );
+			expect( noNewAttributes.hasMinimumJetpackVersion ).to.equal( true );
+			expect( noNewAttributes.canAutoupdateFiles ).to.equal( false );
+			expect( noNewAttributes.canUpdateFiles ).to.equal( false );
 		} );
 	} );
 } );
